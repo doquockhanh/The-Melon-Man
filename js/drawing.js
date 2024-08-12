@@ -36,6 +36,35 @@ game.drawPlayer = function () {
 	)
 }
 
+game.drawLavar = function () {
+	let lavarTile = game.obstacles.lavar.tiles[0];
+	game.context.drawImage(
+		game.textures,
+		lavarTile.tileColumn * game.options.tileWidth,
+		lavarTile.tileRow * game.options.tileHeight,
+		game.options.canvasWidth,
+		game.options.tileHeight,
+		0,
+		Math.round(game.options.canvasHeight / 2 - game.options.tileHeight / 2) + game.obstacles.lavar._y - game.player.y,
+		game.options.canvasWidth * game.options.tileWidth / 3,
+		game.options.tileHeight  * game.options.tileWidth / 3
+	)
+
+	let lavarTile2 = game.obstacles.lavar.tiles[1];
+	game.context.drawImage(
+		game.textures,
+		lavarTile2.tileColumn * game.options.tileWidth,
+		lavarTile2.tileRow * game.options.tileHeight,
+		game.options.canvasWidth,
+		game.options.tileHeight,
+		0,
+		Math.round(game.options.canvasHeight / 2 - game.options.tileHeight / 2) + game.obstacles.lavar._y - game.player.y + (game.options.tileHeight  * game.options.tileWidth / 3),
+		game.options.canvasWidth * game.options.tileWidth / 3,
+		game.options.tileHeight  * game.options.tileWidth / 3
+	)
+}
+
+
 game.redraw = function () {
 	game.drawPending = false
 
@@ -75,6 +104,11 @@ game.redraw = function () {
 
 	// Draw the player
 	game.drawPlayer()
+
+	// Draw the lavar Wave
+	if(game.obstacles.lavar) {
+		game.drawLavar()
+	}
 
 	game.counter.innerHTML = "A game by Karol Swierczek | Controls: A, D / arrows and SPACE | Points: " + Math.round(-game.player.highestY / (3 * game.options.tileHeight)), game.canvas.width - 50, game.canvas.height - 12
 }

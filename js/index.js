@@ -46,5 +46,10 @@ var game = {
 	map: {
 		structures: []
 	},
+	obstacles: {
+		lavar: null,
+		birds: [],
+		fallingObjects: [],
+	},
 	isOver: false
 }
