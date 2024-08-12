@@ -7,8 +7,11 @@ game.player = {
 		isInAir: false,
 		startedJump: false,
 		moveInterval: null,
+		jumpCount: 0,
+		maxJumpCount: 2,
+		fallID: null,
 		fallTimeout: function(startingY, time, maxHeight) {
-			setTimeout( function () {
+			this.fallID = setTimeout( function () {
 				if (this.isInAir) {
 					this.y = startingY - maxHeight + Math.pow((-time / 3 + 11), 2)
 					if (this.y < this.highestY) {
@@ -38,20 +41,28 @@ game.player = {
 			left: [{tileColumn: 4, tileRow: 0}, {tileColumn: 5, tileRow: 0}, {tileColumn: 4, tileRow: 0}, {tileColumn: 6, tileRow: 0}],
 			right: [{tileColumn: 9, tileRow: 0}, {tileColumn: 8, tileRow: 0}, {tileColumn: 9, tileRow: 0}, {tileColumn: 7, tileRow: 0}]
 		},
-		jump: function (type) {
-			if (!this.isInAir) {
-				clearInterval(this.fallInterval)
-				game.sounds.jump.play()
-				this.isInAir = true
-				this.startedJump = true
-				var startingY = this.y
-				var time = 1
-				maxHeight = 121
-				if (type == "fall") {
-					time = 30
-					maxHeight = 0
-				}
-				this.fallTimeout(startingY, time, maxHeight)
-			}
+		jump: function () {
+			// cannot jump when reach maxJumpCount
+			if (this.jumpCount >= this.maxJumpCount) return;
+
+			this.jumpCount++
+			clearTimeout(this.fallID);
+			var startingY = this.y
+			this.isInAir = true
+			this.startedJump = true
+			game.sounds.jump.play()
+			var time = 1
+			maxHeight = 121
+			this.fallTimeout(startingY, time, maxHeight)
+		},
+		fall: function () {
+			if(this.isInAir) return;
+
+			var startingY = this.y
+			this.isInAir = true
+			this.startedJump = true
+			time = 30
+			maxHeight = 0
+			this.fallTimeout(startingY, time, maxHeight)
 		}
 	}
