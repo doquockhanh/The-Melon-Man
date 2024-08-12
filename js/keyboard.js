@@ -14,7 +14,7 @@ game.moveLeft = function () {
 				game.requestRedraw()
 				if (!game.checkCollisions()) {
 					// Player should fall
-					game.player.jump("fall")
+					game.player.fall()
 				}
 			}, 3 * i)
 		}
@@ -35,7 +35,7 @@ game.moveRight = function () {
 				}
 				game.requestRedraw()
 				if (!game.checkCollisions()) {
-					game.player.jump("fall")
+					game.player.fall()
 				}
 			}.bind(game), 3 * i)
 		}
