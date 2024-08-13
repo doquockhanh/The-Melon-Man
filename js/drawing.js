@@ -62,6 +62,12 @@ game.drawLavar = function () {
 		game.options.canvasWidth * game.options.tileWidth / 3,
 		game.options.tileHeight  * game.options.tileWidth / 3
 	)
+
+	// Draw warning
+	game.context.font = "10px superscript"
+	game.context.textAlign = "center"
+	game.context.fillStyle = "black"
+	game.context.fillText("JUMPPP! The lavar wave is comming.", game.canvas.width / 2, game.canvas.height / 3)
 }
 
 

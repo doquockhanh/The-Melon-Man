@@ -6,11 +6,11 @@ function createLavarWave(y, speed, height) {
         _update: null,
         _isEnd: false,
         tiles: [
-            {tileColumn: 6, tileRow: 1}, 
-            {tileColumn: 0, tileRow: 4}
+            { tileColumn: 6, tileRow: 1 },
+            { tileColumn: 0, tileRow: 4 }
         ],
 
-        startWave: function() {
+        startWave: function () {
             this._maxY = this._y - height;
             const self = this;
             this._update = setInterval(function () {
@@ -20,19 +20,19 @@ function createLavarWave(y, speed, height) {
                     // falling down
                     self._speed = -self._speed;
                     self._y -= self._speed;
-                    if(!self._isEnd) {
+                    if (!self._isEnd) {
                         self._waveEnd();
                     }
                     self._isEnd = true
                 } else {
                     self._y -= self._speed;
                 }
-               
+
                 game.requestRedraw()
 
                 // check collission with player
-                if(self._y < game.player.y - 100) {
-                    if(!self._isEnd) {
+                if (self._y < game.player.y - self._speed * 2) {
+                    if (!self._isEnd) {
                         self._waveEnd();
                     }
                     self._isEnd = true
@@ -41,9 +41,9 @@ function createLavarWave(y, speed, height) {
             }, 1000)
         },
 
-        _waveEnd: function() {
+        _waveEnd: function () {
             const self = this;
-            setTimeout(function() {
+            setTimeout(function () {
                 game.obstacles.lavar = null;
                 clearInterval(self._update);
                 self._update = null;
