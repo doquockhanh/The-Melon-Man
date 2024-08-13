@@ -16,8 +16,6 @@ game.player = {
 					this.y = startingY - maxHeight + Math.pow((-time / 3 + 11), 2)
 					if (this.y < this.highestY) {
 						this.highestY = this.y
-
-						checkToSpawnObstacles(this.highestY);
 					}
 					if (time > 37) {
 						this.startedJump = false

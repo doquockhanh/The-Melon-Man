@@ -20,6 +20,7 @@
     <script src="js/player.js"></script>
     <script src="js/obstacles/obstaclesController.js"></script>
     <script src="js/obstacles/lavar.js"></script>
+    <script src="js/obstacles/fallingObject.js"></script>
     <script src="js/keyboard.js"></script>
     <script src="js/drawing.js"></script>
     <script src="js/generator.js"></script>
@@ -39,6 +40,7 @@
       game.init(function () {
       	game.generateMap()
       	game.requestRedraw()
+        game.startSpawnObstacles()
       })
     </script>
     <audio controls loop autoplay hidden>

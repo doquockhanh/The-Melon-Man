@@ -47,7 +47,7 @@ game.drawLavar = function () {
 		0,
 		Math.round(game.options.canvasHeight / 2 - game.options.tileHeight / 2) + game.obstacles.lavar._y - game.player.y,
 		game.options.canvasWidth * game.options.tileWidth / 3,
-		game.options.tileHeight  * game.options.tileWidth / 3
+		game.options.tileHeight * game.options.tileWidth / 3
 	)
 
 	let lavarTile2 = game.obstacles.lavar.tiles[1];
@@ -58,16 +58,42 @@ game.drawLavar = function () {
 		game.options.canvasWidth,
 		game.options.tileHeight,
 		0,
-		Math.round(game.options.canvasHeight / 2 - game.options.tileHeight / 2) + game.obstacles.lavar._y - game.player.y + (game.options.tileHeight  * game.options.tileWidth / 3),
+		Math.round(game.options.canvasHeight / 2 - game.options.tileHeight / 2) + game.obstacles.lavar._y - game.player.y + (game.options.tileHeight * game.options.tileWidth / 3),
 		game.options.canvasWidth * game.options.tileWidth / 3,
-		game.options.tileHeight  * game.options.tileWidth / 3
+		game.options.tileHeight * game.options.tileWidth / 3
 	)
 
 	// Draw warning
-	game.context.font = "10px superscript"
-	game.context.textAlign = "center"
-	game.context.fillStyle = "black"
-	game.context.fillText("JUMPPP! The lavar wave is comming.", game.canvas.width / 2, game.canvas.height / 3)
+	if (game.obstacles.lavar.warning) {
+		game.context.font = "10px superscript"
+		game.context.textAlign = "center"
+		game.context.fillStyle = "black"
+		game.context.fillText("JUMPPP!!!!!!!.", game.canvas.width / 2, game.canvas.height / 3)
+	}
+}
+
+game.drawFallingObject = function () {
+	for (let i = 0; i < game.obstacles.fallingObjects.length; i ++) {
+		let Fo = game.obstacles.fallingObjects[i];
+		game.context.drawImage(
+			game.textures,
+			Fo.tile.tileColumn * game.options.tileWidth,
+			Fo.tile.tileRow * game.options.tileHeight,
+			game.options.tileWidth,
+			game.options.tileHeight,
+			Math.round(game.options.canvasWidth / 2 - game.options.tileWidth / 2) - (game.player.x - Fo.x),
+			Math.round(game.options.canvasHeight / 2 - game.options.tileHeight / 2) - (game.player.y - Fo._y),
+			game.options.tileWidth,
+			game.options.tileHeight
+		)
+	}
+
+	if (game.obstacles.fallingObjects.length > 0) {
+		game.context.font = "10px superscript"
+		game.context.textAlign = "center"
+		game.context.fillStyle = "black"
+		game.context.fillText("Watch out!!!!!.", game.canvas.width / 2, game.canvas.height / 4)
+	}
 }
 
 
@@ -112,8 +138,13 @@ game.redraw = function () {
 	game.drawPlayer()
 
 	// Draw the lavar Wave
-	if(game.obstacles.lavar) {
+	if (game.obstacles.lavar) {
 		game.drawLavar()
+	}
+
+	// Draw the lavar Wave
+	if (game.obstacles.fallingObjects.length > 0) {
+		game.drawFallingObject()
 	}
 
 	game.counter.innerHTML = "A game by Karol Swierczek | Controls: A, D / arrows and SPACE | Points: " + Math.round(-game.player.highestY / (3 * game.options.tileHeight)), game.canvas.width - 50, game.canvas.height - 12
@@ -125,7 +156,7 @@ game.requestRedraw = function () {
 		requestAnimationFrame(game.redraw)
 	}
 
-	if(game.isOver) {
+	if (game.isOver) {
 		clearInterval(this.player.fallInterval)
 		game.context.font = "30px superscript"
 		game.context.textAlign = "center"

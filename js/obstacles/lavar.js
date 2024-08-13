@@ -4,7 +4,8 @@ function createLavarWave(y, speed, height) {
         _speed: speed,
         _maxY: 0,
         _update: null,
-        _isEnd: false,
+        isEnd: false,
+        warning: false,
         tiles: [
             { tileColumn: 6, tileRow: 1 },
             { tileColumn: 0, tileRow: 4 }
@@ -20,22 +21,29 @@ function createLavarWave(y, speed, height) {
                     // falling down
                     self._speed = -self._speed;
                     self._y -= self._speed;
-                    if (!self._isEnd) {
+                    if (!self.isEnd) {
                         self._waveEnd();
                     }
-                    self._isEnd = true
+                    self.isEnd = true
                 } else {
                     self._y -= self._speed;
                 }
 
                 game.requestRedraw()
 
+                // warning player if wave close
+                if (self._y - game.player.y <= 300) {
+                    self.warning = true;
+                }else {
+                    self.warning = false;
+                }
+
                 // check collission with player
                 if (self._y < game.player.y - self._speed * 2) {
-                    if (!self._isEnd) {
+                    if (!self.isEnd) {
                         self._waveEnd();
                     }
-                    self._isEnd = true
+                    self.isEnd = true
                     game.isOver = true;
                 }
             }, 1000)
