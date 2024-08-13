@@ -73,7 +73,7 @@ game.drawLavar = function () {
 }
 
 game.drawFallingObject = function () {
-	for (let i = 0; i < game.obstacles.fallingObjects.length; i ++) {
+	for (let i = 0; i < game.obstacles.fallingObjects.length; i++) {
 		let Fo = game.obstacles.fallingObjects[i];
 		game.context.drawImage(
 			game.textures,
@@ -147,7 +147,8 @@ game.redraw = function () {
 		game.drawFallingObject()
 	}
 
-	game.counter.innerHTML = "A game by Karol Swierczek | Controls: A, D / arrows and SPACE | Points: " + Math.round(-game.player.highestY / (3 * game.options.tileHeight)), game.canvas.width - 50, game.canvas.height - 12
+	game.score = Math.round(-game.player.highestY / (3 * game.options.tileHeight)), game.canvas.width - 50, game.canvas.height - 12;
+	game.counter.innerHTML = "A game by Karol Swierczek | Controls: A, D / arrows and SPACE | Points: " + game.score;
 }
 
 game.requestRedraw = function () {
@@ -157,12 +158,25 @@ game.requestRedraw = function () {
 	}
 
 	if (game.isOver) {
+		let highestScore = game.saveHighestScore();
 		clearInterval(this.player.fallInterval)
 		game.context.font = "30px superscript"
 		game.context.textAlign = "center"
 		game.context.fillStyle = "black"
 		game.context.fillText("Game over!", game.canvas.width / 2, game.canvas.height / 2)
 		game.context.font = "15px Georgia"
+		game.context.fillText(`Score: ${game.score} | Highest Score: ${highestScore}`, game.canvas.width / 2, game.canvas.height / 2 + 25)
 		game.context.fillText("(Refresh the page to restart)", game.canvas.width / 2, game.canvas.height / 2 + 50)
 	}
+}
+
+game.saveHighestScore = function () {
+	let highScore = localStorage.getItem('highScore');
+
+	if (highScore === null || game.score > highScore) {
+		localStorage.setItem('highScore', game.score);
+		return game.score;
+	}
+
+	return highScore;
 }
