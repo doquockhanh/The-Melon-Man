@@ -20,9 +20,9 @@ function createFallingObject(x) {
                 if (self._y > self._maxY) {
                     // reach the highest pos 
                     if (!self._isEnd) {
+                        self._isEnd = true
                         self._fallingEnd();
                     }
-                    self._isEnd = true
                 } else {
                     self._y += self._speed;
                 }
@@ -38,10 +38,10 @@ function createFallingObject(x) {
                 ) {
                     console.log("hit");
                     if (!self._isEnd) {
+                        self._isEnd = true
                         self._fallingEnd();
+                        game.isOver = true;
                     }
-                    self._isEnd = true
-                    game.isOver = true;
                 }
             }, 20)
         },

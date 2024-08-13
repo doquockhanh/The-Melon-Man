@@ -34,7 +34,7 @@ function createLavarWave(y, speed, height) {
                 // warning player if wave close
                 if (self._y - game.player.y <= 300) {
                     self.warning = true;
-                }else {
+                } else {
                     self.warning = false;
                 }
 
@@ -42,9 +42,9 @@ function createLavarWave(y, speed, height) {
                 if (self._y < game.player.y - self._speed * 2) {
                     if (!self.isEnd) {
                         self._waveEnd();
+                        self.isEnd = true
+                        game.isOver = true;
                     }
-                    self.isEnd = true
-                    game.isOver = true;
                 }
             }, 1000)
         },
