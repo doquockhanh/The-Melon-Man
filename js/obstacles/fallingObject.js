@@ -28,7 +28,6 @@ function createFallingObject(x) {
                 }
 
                 game.requestRedraw()
-                console.log(`${self.x} ${self._y} ${game.player.x} ${game.player.y}`)
 
                 // check collission with player
                 if ((self._y >= game.player.y || self._y + self._height >= game.player.y)
@@ -36,7 +35,6 @@ function createFallingObject(x) {
                     && (self.x >= game.player.x || self.x + self._width >= game.player.x)
                     && (self.x <= game.player.x + self._width || self.x + self._width <= game.player.x + self._width)
                 ) {
-                    console.log("hit");
                     if (!self._isEnd) {
                         self._isEnd = true
                         self._fallingEnd();

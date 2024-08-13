@@ -15,7 +15,6 @@ function createLavarWave(y, speed, height) {
             this._maxY = this._y - height;
             const self = this;
             this._update = setInterval(function () {
-                console.log(`${self._y} ${self._maxY}`)
                 if (self._y < self._maxY) {
                     // reach the highest of wave
                     // falling down
