@@ -1,5 +1,7 @@
 let lavarWave1 = false
 let fallingObject1 = false
+let lavarWave2 = false
+let fallingObject2 = false
 
 game.startSpawnObstacles = function () {
     setInterval(function () {
@@ -14,8 +16,17 @@ game.startSpawnObstacles = function () {
             fallingObject1 = true;
             spawnFallingObject(15000);
         }
-    })
 
+        if (y < -4000 && !lavarWave2) {
+            game.obstacles.lavar = createLavarWave(game.player.y + 200, 100, 1500)
+            lavarWave2 = true;
+            game.obstacles.lavar.startWave()
+        }
+        if (y < -6500 && !fallingObject2) {
+            fallingObject2 = true;
+            spawnFallingObject(15000);
+        }
+    }, 1000)
 }
 
 game.createDelay = function (ms) {
